@@ -7,4 +7,4 @@ let server = http.createServer((request, response) => {
 	response.end('完毕');//必须要有end，不然一直在加载
 })
 
-server.listen(3000, '127.0.0.1');
+server.listen(3000, '127.0.0.1');//监听3000端口，第二个参数是绑定的ip；node该文件夹后，浏览器打开 127.0.0.1:3000 即可访问
