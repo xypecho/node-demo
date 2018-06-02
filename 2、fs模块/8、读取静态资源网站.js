@@ -11,7 +11,7 @@ http.createServer((req, res) => {
 	if (pathName === '/') {
 		pathName = '/index.html';
 	}
-	fs.readFile(`./测试的网站${pathName}`, 'utf8', (err, data) => {
+	fs.readFile(`./测试的网站${pathName}`, (err, data) => {
 		if (err) {
 			fs.readFile('404.html', 'utf8', (error, result) => {
 				res.writeHead(404, {'Content-Type':'text/html;charset=UTF8'});
@@ -19,12 +19,10 @@ http.createServer((req, res) => {
 			})
 			return;
 		}
-		res.writeHead(200, {'Content-Type':'text/html;charset=UTF8'});
-		res.end(data);
-		// getExtname(pathName, function(ret) {
-		// 	res.writeHead(200, {'Content-Type':`${ret};charset=UTF8`});
-		// 	res.end(data);
-		// });
+		getExtname(pathName, function(ret) {
+			res.writeHead(200, {'Content-Type':`${ret};charset=UTF8`});
+			res.end(data);
+		});
 	})
 }).listen(3000, '127.0.0.1');
 
