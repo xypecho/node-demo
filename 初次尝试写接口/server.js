@@ -3,49 +3,60 @@ const fs = require('fs');
 const url = require('url');
 const querystring = require('querystring');
 
-http.createServer((req,res) => {
-	let str = ''; //用于拼接传往后台的数据
-	let users = {}; //用来存放前台传的数据,存放的数据的格式为{['name':'jack','password':'123455']}
-	req.on('data', data => str+=data);
+http.createServer((req, res) => {
+	let str; // 用来接收前台传来的数据
+	req.on('data', (data) => {
+		str+=data;
+	})
 	req.on('end', () => {
-		// console.log(url.parse(req.url, true));
-		let pathname = url.parse(req.url, true).pathname;
-		let query = url.parse(req.url, true).query;
-		// console.log(querystring.parse(str))
-		if (pathname === '/' || pathname === '/index.html') {
-			pathname = 'index.html';
-		} // 首页默认为index.html
-		// 判断是请求接口还是读取文件，目前接口只有/user所有可以直接判断是否是/user
-		if (query === '/user') {
-			console.log(123);
-			// 处理接口相关的内容
-			if (query.act === 'register') {
-				// 判断是注册还是登录
-				users[query.name] = query.password;
-				res.write('{"status":OK,"msg":"注册成功"}');
-			} else if (query.act === 'login'){
-				res.write('{"status":OK,"msg":"注册成功2313"}');
+		const obj = url.parse(req.url, true);
+		const query = obj.query; // url中的参数
+		const pathname = obj.pathname; // 获取url路由
+		const postData = querystring.parse(str); // 解析前台传来的数据，解析的格式为{ name: 'whitemu', sex: 'man' }
+		if (obj.pathname === '/favicon.ico') {
+			return false; // 屏蔽对favicon.ico'的请求
+		}
+		// console.log(pathname)
+		if (pathname === '/user') {
+			// 在此处处理user接口相关内容
+			if (query.act == 'registered') {
+				res.writeHead(200, {'Content-Type':'text/plain;charset=UTF8'});
+				res.write("{'status':'ok','msg':'注册成功'}")
+				res.end();
+				// 处理注册相关的逻辑
+			} else if (query.act == 'login') {
+				res.writeHead(200, {'Content-Type':'text/plain;charset=UTF8'});
+				res.write("{'status':'ok','msg':'登录成功'}")
+				res.end();
+				// 处理登录相关逻辑
 			} else {
-				// fs.readFile('404.html', (error,result) => {
+				res.writeHead(404, {'Content-Type':'text/plain;charset=UTF8'});
+				res.write("{'status':'error','msg':'发生未知错误'}")
+				res.end();
+				// fs.readFile('www/404.html', 'utf8', (error, result) => {
+				// 	if (error) {
+				// 		return;
+				// 	}
 				// 	res.writeHead(404, {'Content-Type':'text/html;charset=UTF8'});
-				// 	res.end(result)
+				// 	res.end(result);
 				// })
 			}
-			res.end();
 		} else {
-			console.log(356);
-			// 读取文件
-			fs.readFile(pathname, (err, data) => {
-				if(err) {
-					fs.readFile('404.html', (error,result) => {
+			fs.readFile('www' + pathname, (err, data) => {
+				if (err) {
+					fs.readFile('www/404.html', 'utf8', (error, result) => {
+						if (error) {
+							return;
+						}
 						res.writeHead(404, {'Content-Type':'text/html;charset=UTF8'});
-						res.end(result)
+						res.end(result);
 					})
-				} else {
-					res.writeHead(200, {'Content-Type':'text/html;charset=UTF8'});
-					res.end(data)
+					return;
 				}
+				console.log(data)
+				res.writeHead(200, {'Content-Type':'text/html;charset=UTF8'});
+				res.end(data)
 			})
 		}
-	});
-}).listen('8080');
+	})
+}).listen('8081')
