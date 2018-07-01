@@ -14,23 +14,48 @@
 	<button id="login">登录</button>
 </body>
 	<script>
-		$('#register').click(function(){
-			let name = $('#name').val();
-			let password = $('#password').val();
-			$.ajax({
-				type:'get',
-				url:'http://localhost:8081/user',
-				data: {
-					act: 'registered',
-					name,
-					password
-				},
-				success:function(data) {
-					console.log(data);
-				},
-				error:function(err){
-					alert('通信错误');
-				}
+		$(function(){
+			$('#register').click(function(){
+				$.ajax({
+					type:'get',
+					url:'/user',
+					data: {
+						act: 'registered',
+						name:$('#name').val(),
+						password:$('#password').val()
+					},
+					success:function(data) {
+						// console.log(data)
+						let res = eval('('+data+')');
+						// console.log(res);
+						// console.log(res.msg);
+						alert(res.msg)
+					},
+					error:function(err){
+						alert('通信错误');
+					}
+				})
+			})
+			$('#login').click(() => {
+				$.ajax({
+					type:'get',
+					url:'/user',
+					data: {
+						act: 'login',
+						name:$('#name').val(),
+						password:$('#password').val()
+					},
+					success:function(data) {
+						// console.log(data)
+						let res = eval('('+data+')');
+						// console.log(res);
+						// console.log(res.msg);
+						alert(res.msg)
+					},
+					error:function(err){
+						alert('通信错误');
+					}
+				})
 			})
 		})
 	</script>
