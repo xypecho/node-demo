@@ -26,7 +26,7 @@ http.createServer((req, res) => {
 			if (query.act == 'registered') {
 				if (users[query.name]) {
 					res.writeHead(200, {'Content-Type':'text/plain;charset=UTF8'});
-					res.write("{'status':'false',msg:'帐号已经存在'}")
+					res.write("{'status':false,msg:'帐号已经存在'}")
 				} else {
 					users[query.name] = query.password
 					res.writeHead(200, {'Content-Type':'text/plain;charset=UTF8'});
@@ -38,16 +38,16 @@ http.createServer((req, res) => {
 			} else if (query.act == 'login') {
 				if (users[query.name] === query.password) {
 					res.writeHead(200, {'Content-Type':'text/plain;charset=UTF8'});
-					res.write("{'status':'ok','msg':'登录成功'}")
+					res.write("{'status':true,'msg':'登录成功'}")
 				} else {
 					res.writeHead(200, {'Content-Type':'text/plain;charset=UTF8'});
-					res.write("{'status':'ok','msg':'帐号或者密码错误'}")
+					res.write("{'status':false,'msg':'帐号或者密码错误'}")
 				}
 				res.end();
 				// 处理登录相关逻辑
 			} else {
 				res.writeHead(404, {'Content-Type':'text/plain;charset=UTF8'});
-				res.write("{'status':'error','msg':'发生未知错误'}")
+				res.write("{'status':false,'msg':'发生未知错误'}")
 				res.end();
 			}
 		} else {

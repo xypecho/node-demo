@@ -25,10 +25,8 @@
 						password:$('#password').val()
 					},
 					success:function(data) {
-						// console.log(data)
 						let res = eval('('+data+')');
-						// console.log(res);
-						// console.log(res.msg);
+						console.log(res)
 						alert(res.msg)
 					},
 					error:function(err){
@@ -46,9 +44,8 @@
 						password:$('#password').val()
 					},
 					success:function(data) {
-						// console.log(data)
 						let res = eval('('+data+')');
-						// console.log(res);
+						console.log(res);
 						// console.log(res.msg);
 						alert(res.msg)
 					},
