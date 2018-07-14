@@ -3,11 +3,18 @@ html
 		script(src='a.js')
 		link(href='b.css',rel='stylesheet')
 	body
-		div
+		abc
+		| abc // 加竖线代表直接输出不编译
+		div.test
+		div#test
+		div(style='color:red;font-size:22px')
 			ul
 				li
 					input(type='text',value='test') 
-				li
+				li(class='test test123')
 					input(type='text')
 				li
 					a(href='www.baidu.com') 官网
+		script. // 此处加点代表所有js代码不编译直接输出
+			document.getElementById('test');
+			alert(123);
