@@ -1,5 +1,6 @@
 html
 	head
 		body
+			p!=text // 前面加感叹号可以输出html标签
 			-for(i = 0; i < arr.length; i++)
 				div(id=arr[i])=arr[i]
