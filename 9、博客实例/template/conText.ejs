@@ -72,7 +72,7 @@
         <h3><%= articleDetail.Summary %></h3>
         <div class="time"><p><%= new Date(articleDetail.ReleaseTime).toLocaleDateString() %>  <%= new Date(articleDetail.ReleaseTime).toLocaleTimeString()  %><span><img src="img/zan.png" alt=""/></span></p></div>
         <div class="text-box">
-            <%= articleDetail.Content %>
+            <%- articleDetail.Content %>
         </div>
     </div>
 </div>

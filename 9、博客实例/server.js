@@ -66,6 +66,7 @@ server.get('/conText.html',(req,res) => {
         res.status(500).send('article_table error').end();
       } else {
         console.log(data)
+        data[0].Content = data[0].Content.replace(/^/gm,'<p>').replace(/$/gm,'</p>');
         res.render('conText.ejs',{articleDetail:data[0]})
       }
     })
