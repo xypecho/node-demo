@@ -13,7 +13,7 @@ const db=mysql.createPool({host: 'localhost', user: 'root', password: '123456', 
 var server=express();
 server.listen(8080);
 
-//1.解析cookie
+// //1.解析cookie
 // server.use(cookieParser('sdfasl43kjoifguokn4lkhoifo4k3'));
 
 // //2.使用session
@@ -36,18 +36,42 @@ server.set('views', './template');
 server.engine('html', consolidate.ejs);
 
 //接收用户请求
-server.get('/', (req, res)=>{
-  //查询banner的东西
+server.get('/', (req, res,next)=>{
   db.query("SELECT * FROM banner_table", (err, data)=>{
     if(err){
-      console.log(err);
-      res.status(500).send('database error').end();
+      res.status(500).send('banner_table error').end();
     }else{
-      console.log(data);
-      res.render('index.ejs', {banners: data});
+      res.banners = data;
+      next();
     }
   });
 });
-
+server.get('/',(req, res, next) => {
+  db.query('SELECT * FROM article_table',(err, data) => {
+    if (err) {
+      res.status(500).send('article_table error').end();
+    } else {
+      res.article = data;
+      next();
+    }
+  })
+});
+server.get('/',(req,res) =>{
+  res.render('index.ejs', {banners: res.banners,article:res.article});
+})
+server.get('/conText.html',(req,res) => {
+  if (req.query.id) {
+    db.query(`SELECT * FROM article_table WHERE ID = ${req.query.id}`,(err,data) => {
+      if (err) {
+        res.status(500).send('article_table error').end();
+      } else {
+        console.log(data)
+        res.render('conText.ejs',{articleDetail:data[0]})
+      }
+    })
+  } else {
+    res.status(404).send('id is not exist').end();
+  }
+})
 //4.static数据
 server.use(static('./www'));
