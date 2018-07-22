@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>智能社-http://www.zhinengshe.com</title>
+    <title>test</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -14,11 +14,11 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link href="css/base.css" rel="stylesheet" type="text/css">
-    <link href="css/index.css" rel="stylesheet" type="text/css">
-    <script src="js/font.js"></script>
-	<script type="text/javascript" src="js/jquery-1.7.2.js"></script>
-	<script type="text/javascript" src="js/swipe.js"></script>
+    <link rel="stylesheet" href="./css/base.css">
+    <link href="./css/index.css" rel="stylesheet">
+    <script src="./js/font.js"></script>
+	<script src="./js/jquery-1.7.2.js"></script>
+	<script src="./js/swipe.js"></script>
     <script>
     	$(function (){
 			var mySwipe=Swipe($('.banner')[0],{
@@ -46,10 +46,10 @@
       <ul class="clearfix">
         <% for(var i=0;i<banners.length;i++){ %>
         <li>
-          <img src="<%= banners[i].src %>" alt=""/>
+          <img src="<%= banners[i].Src %>" alt="" style='height: 300px;width: 100%'/>
           <div class="text-box">
-            <h2><%= banners[i].title %></h2>
-            <p><%= banners[i].sub_title %></p>
+            <h2><%= banners[i].Title %></h2>
+            <p><%= banners[i].Subtitle %></p>
           </div>
         </li>
         <% } %>
