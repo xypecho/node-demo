@@ -61,11 +61,17 @@ server.get('/',(req,res) =>{
 })
 server.get('/conText.html',(req,res) => {
   if (req.query.id) {
+    if (req.query.act == 'likes') {
+      db.query(`UPDATE article_table SET Likes = Likes + 1 WHERE ID = ${req.query.id}`,(err, data) => {
+        if (err) {
+          res.status(500).send('update article_table error')
+        }
+      })
+    }
     db.query(`SELECT * FROM article_table WHERE ID = ${req.query.id}`,(err,data) => {
       if (err) {
         res.status(500).send('article_table error').end();
       } else {
-        console.log(data)
         data[0].Content = data[0].Content.replace(/^/gm,'<p>').replace(/$/gm,'</p>');
         res.render('conText.ejs',{articleDetail:data[0]})
       }
