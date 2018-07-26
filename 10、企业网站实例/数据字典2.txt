@@ -84,5 +84,8 @@ href		varchar(300)
 ------------------------------------------------------------------------------
 
 
-
+admin_table          管理员表
+ID
+username            varchar(32)
+password	    varchar(32)
 
