@@ -36,13 +36,13 @@ app.set('view engine', 'html');
 
 //4.route
 const router = express.Router();
-router.use('/a.html', (req, res) => {
-    res.send('这是a页面');
+app.get('/art',router);
+router.get('1.html',(req,res) => {
+    res.send('this is 1.html').end();
 })
-router.use('/b.html', (req, res) => {
-    res.send('这是bbbbbbbbbbbbbbbbbb页面');
+router.get('2.html',(req,res) => {
+    res.send('this is 22222222222222222.html').end();
 })
-app.use('/user', router);
 
 //5.没有获取到数据，设置默认显示的数据 default:static
 app.use(expressStatic('./static/'))
