@@ -35,14 +35,9 @@ app.set('views', 'template');
 app.set('view engine', 'html');
 
 //4.route
-const router = express.Router();
-app.get('/art',router);
-router.get('1.html',(req,res) => {
-    res.send('this is 1.html').end();
-})
-router.get('2.html',(req,res) => {
-    res.send('this is 22222222222222222.html').end();
-})
+const router = require('./route/1.js');
+app.use('/art/', router());
+
 
 //5.没有获取到数据，设置默认显示的数据 default:static
 app.use(expressStatic('./static/'))
