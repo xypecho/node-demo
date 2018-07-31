@@ -35,8 +35,8 @@ app.set('views', 'template');
 app.set('view engine', 'html');
 
 //4.route
-const router = require('./route/1.js');
-app.use('/art/', router());
+app.use('/', require('./route/web.js')());
+app.use('/admin', require('./route/admin.js')());
 
 
 //5.没有获取到数据，设置默认显示的数据 default:static
