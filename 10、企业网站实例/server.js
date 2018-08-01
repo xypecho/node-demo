@@ -23,7 +23,7 @@ app.use(cookieParser());
         keys[i] = Math.random();
     }
     app.use(cookieSession({
-        name: 'session_id',
+        name: 'admin_id',
         keys,
         MaxAge: 20 * 60 * 1000 // 20分钟
     }))
