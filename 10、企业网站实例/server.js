@@ -13,6 +13,7 @@ const app = express();
 app.listen(8080);
 
 //1.获取请求数据
+app.use(bodyParser.urlencoded())
 app.use(multerobj.any()); // any指接受所有文件，single()指接受指定文件，例如single('f1')指只接受html文件里面name为f1的input的文件
 
 //2.cookie，session
@@ -36,7 +37,7 @@ app.set('view engine', 'html');
 
 //4.route
 app.use('/', require('./route/web.js')());
-app.use('/admin', require('./route/admin.js')());
+app.use('/admin/', require('./route/admin.js')());
 
 
 //5.没有获取到数据，设置默认显示的数据 default:static
