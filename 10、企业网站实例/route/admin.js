@@ -7,32 +7,46 @@ module.exports = () => {
     const router = express.Router();
     // 路由拦截，没登录时重定向到login页面
     router.use((req, res, next) => {
-        if (!req.session['admin_id'] && req.url != '/login') {
+        if (req.session['admin_id'] == '' && req.url != '/login') {
+            console.log(!req.session['admin_id'] && req.url != '/login')
             res.redirect('/admin/login');
+            return;
         } else {
             next();
         }
     })
 
-    router.use('/login', (req, res) => {
+    // 解决 Can't set headers after they are sent.报错
+    router.get('/login',(req,res) => {
+        res.render('admin/login.ejs', {})
+    })
+    router.post('/login', (req, res) => {
         let username = req.body.username;
         let password = req.body.password;
         db.query('SELECT * FROM admin_table', (err, data) => {
+            // console.log(data[0].ID)
             if (err) {
-            	res.status(500).send('database error').end();
+            	res.status(500).send('{"status":true,"msg":"查询数据失败"}').end();
             } else {
             	if (data.length == 0) {
-            		res.status(404).send('not found data').end();
+            		res.status(404).send('{"status":true,"msg":"查询失败"}').end();
             	} else {
             		if (data[0].password == tool.md5(`${password}`)) {
-            			res.status(200).send('登录成功').end();
+            			// res.status(200).send('{"status":true,"msg":"登录成功"}').end();
+                        req.session['admin_id'] = data[0].ID;
+                        res.redirect('/admin/');
+                        console.log(req.session);
+                        console.log(req.session['admin_id']);
             		} else {
-            			res.status(500).send('帐号不存在').end();
+            			res.status(500).send('{"status":true,"msg":"帐号不存在"}').end();
             		}
             	}
             }
         })
-        res.render('admin/login.ejs', {})
+    })
+
+    router.get('/',(req,res) => {
+        res.send('登录成功!!!').end();
     })
     return router;
 }
