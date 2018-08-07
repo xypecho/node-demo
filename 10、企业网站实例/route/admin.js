@@ -32,7 +32,7 @@ module.exports = () => {
             		res.status(404).send('{"status":true,"msg":"查询失败"}').end();
             	} else {
             		if (data[0].password == tool.md5(`${password}`)) {
-                        console.log(data[0].ID)
+                        res.account = data[0];
             			// res.status(200).send('{"status":true,"msg":"登录成功"}').end();
                         req.session['admin_id'] = data[0].ID;
                         res.redirect('/admin/');
@@ -45,7 +45,7 @@ module.exports = () => {
     })
 
     router.get('/',(req,res) => {
-        console.log(__dirname)
+        console.log(res.account);
         app.use(express.static(path.join('template/admin/assets')))
         res.render('./admin/index.ejs',{});
     })
