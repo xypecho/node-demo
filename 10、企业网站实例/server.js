@@ -21,7 +21,7 @@ app.use(cookieParser());
 (() => {
     let keys = [];
     for (var i = 0; i < 10000; i++) {
-        keys[i] = Math.random();
+        keys[i] = 'a_' + Math.random();
     }
     app.use(cookieSession({
         name: 'admin_id',

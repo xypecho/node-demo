@@ -1,16 +1,16 @@
 const express = require('express');
 const tool = require('../libs/common.js')
 const mysql = require('mysql');
+const app = express()
+const path = require('path')
 
 module.exports = () => {
     const db = mysql.createPool({ host: 'localhost', post: '3306', user: 'root', password: '123456', database: 'company_website' });
     const router = express.Router();
     // 路由拦截，没登录时重定向到login页面
     router.use((req, res, next) => {
-        if (req.session['admin_id'] == '' && req.url != '/login') {
-            console.log(!req.session['admin_id'] && req.url != '/login')
+        if (!req.session['admin_id'] && req.url != '/login') {
             res.redirect('/admin/login');
-            return;
         } else {
             next();
         }
@@ -32,11 +32,10 @@ module.exports = () => {
             		res.status(404).send('{"status":true,"msg":"查询失败"}').end();
             	} else {
             		if (data[0].password == tool.md5(`${password}`)) {
+                        console.log(data[0].ID)
             			// res.status(200).send('{"status":true,"msg":"登录成功"}').end();
                         req.session['admin_id'] = data[0].ID;
                         res.redirect('/admin/');
-                        console.log(req.session);
-                        console.log(req.session['admin_id']);
             		} else {
             			res.status(500).send('{"status":true,"msg":"帐号不存在"}').end();
             		}
@@ -46,7 +45,9 @@ module.exports = () => {
     })
 
     router.get('/',(req,res) => {
-        res.send('登录成功!!!').end();
+        console.log(__dirname)
+        app.use(express.static(path.join('template/admin/assets')))
+        res.render('./admin/index.ejs',{});
     })
     return router;
 }
