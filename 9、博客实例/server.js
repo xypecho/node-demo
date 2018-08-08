@@ -11,7 +11,7 @@ const mysql = require('mysql');
 const db = mysql.createPool({ host: 'localhost', user: 'root', password: '123456', database: 'blog' });
 
 var server = express();
-server.listen(8080);
+server.listen(8081);
 
 // //1.解析cookie
 // server.use(cookieParser('sdfasl43kjoifguokn4lkhoifo4k3'));
