@@ -47,15 +47,25 @@ module.exports = () => {
     })
 
     router.get('/banner', (req, res) => {
+        // if (req.query.act == 'edit') {
+            
+        // }
+        if (req.query.act == 'delete') {
+            db.query(`DELETE FROM banner_table WHERE ID = ${req.query.id}`,(err,data) => {
+                if (err) {
+                    res.status(500).send('failed to delete data')
+                } else {
+                    res.render('./admin/banner.ejs', {data});
+                }
+            })
+        }
         db.query('SELECT * FROM banner_table', (err, data) => {
-            console.log(data)
             if (err) {
                 res.status(500).send('failed to select data from banner_table');
             } else {
                 res.render('./admin/banner.ejs', {data});
             }
         })
-
     })
 
     router.post('/banner', (req, res) => {

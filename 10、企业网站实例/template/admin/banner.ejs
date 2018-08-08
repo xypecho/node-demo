@@ -113,9 +113,9 @@
                                         <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
                                             <thead>
                                                 <tr>
-                                                    <th>文章标题</th>
-                                                    <th>作者</th>
-                                                    <th>时间</th>
+                                                    <th>标题</th>
+                                                    <th>描述</th>
+                                                    <th>链接</th>
                                                     <th>操作</th>
                                                 </tr>
                                             </thead>
@@ -134,10 +134,10 @@
                                                             </td>
                                                             <td>
                                                                 <div class="tpl-table-black-operation">
-                                                                    <a href="javascript:;">
+                                                                    <a href="?act=edit&id=<%= data[i].ID %>">
                                                                         <i class="am-icon-pencil"></i> 编辑
                                                                     </a>
-                                                                    <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                                    <a href="?act=delete&id=<%= data[i].ID %>" class="tpl-table-black-operation-del" onclick="return confirm('是否删除该条数据？')">
                                                                         <i class="am-icon-trash"></i> 删除
                                                                     </a>
                                                                 </div>
