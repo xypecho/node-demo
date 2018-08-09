@@ -40,5 +40,5 @@ app.use('/', require('./route/web.js')());
 app.use('/admin/', require('./route/admin.js')());
 
 
-//5.没有获取到数据，设置默认显示的数据 default:static1
+//5.没有获取到数据，设置默认显示的数据 default:static
 app.use(expressStatic('./static/'))
