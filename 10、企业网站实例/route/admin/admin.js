@@ -1,5 +1,5 @@
 const express = require('express');
-const tool = require('../libs/common.js')
+const tool = require('../../libs/common.js')
 const mysql = require('mysql');
 const app = express()
 const path = require('path')
@@ -42,43 +42,11 @@ module.exports = () => {
         })
     })
 
+    router.use('/banner',require('./banner.js')())
     router.get('/', (req, res) => {
         res.render('./admin/index.ejs', {});
     })
 
-    router.get('/banner', (req, res) => {
-        if (req.query.act == 'edit') {
-            res.send(req.query.id)
-        }
-        if (req.query.act == 'delete') {
-            db.query(`DELETE FROM banner_table WHERE ID = ${req.query.id}`, (err, data) => {
-                if (err) {
-                    res.status(500).send('failed to delete data')
-                } else {
-                    res.redirect('/admin/banner');
-                }
-            })
-        }
-        db.query('SELECT * FROM banner_table', (err, data) => {
-            if (err) {
-                res.status(500).send('failed to select data from banner_table');
-            } else {
-                res.render('./admin/banner.ejs', { data });
-            }
-        })
-    })
 
-    router.post('/banner', (req, res) => {
-        let title = req.body.title;
-        let description = req.body.description;
-        let href = req.body.href;
-        db.query(`INSERT INTO banner_table (title,description,href) VALUES ('${title}','${description}','${href}')`, (err, data) => {
-            if (err) {
-                res.status(500).send('failed to insert into banner_table');
-            } else {
-                res.redirect('/admin/banner')
-            }
-        })
-    })
     return router;
 }

@@ -59,31 +59,31 @@
                                     <div class="widget-body am-fr">
                                         <form class="am-form tpl-form-line-form" method="post" action="?">
                                             <div class="am-form-group">
-                                                <label for="user-name" class="am-u-sm-3 am-form-label">标题
+                                                <label for="" class="am-u-sm-3 am-form-label">标题
                                                     <span class="tpl-form-line-small-title">title</span>
                                                 </label>
                                                 <div class="am-u-sm-9">
-                                                    <input type="text" class="tpl-form-input" id="user-name" name="title" placeholder="请输入标题文字">
+                                                    <input type="text" class="tpl-form-input"  name="title" placeholder="请输入标题文字">
                                                     <small>请填写标题文字10-20字左右。</small>
                                                 </div>
                                             </div>
 
                                             <div class="am-form-group">
-                                                <label for="user-name" class="am-u-sm-3 am-form-label">描述
+                                                <label for="" class="am-u-sm-3 am-form-label">描述
                                                     <span class="tpl-form-line-small-title">description</span>
                                                 </label>
                                                 <div class="am-u-sm-9">
-                                                    <input type="text" class="tpl-form-input" id="user-name" name="description" placeholder="请输入描述文字">
+                                                    <input type="text" class="tpl-form-input"  name="description" placeholder="请输入描述文字">
                                                     <small>请填写标题文字10-20字左右。</small>
                                                 </div>
                                             </div>
 
                                             <div class="am-form-group">
-                                                <label for="user-name" class="am-u-sm-3 am-form-label">链接
+                                                <label for="" class="am-u-sm-3 am-form-label">链接
                                                     <span class="tpl-form-line-small-title">href</span>
                                                 </label>
                                                 <div class="am-u-sm-9">
-                                                    <input type="text" class="tpl-form-input" id="user-name" name="href" placeholder="请输入链接文字">
+                                                    <input type="text" class="tpl-form-input"  name="href" placeholder="请输入链接文字">
                                                     <small>请填写标题文字10-20字左右。</small>
                                                 </div>
                                             </div>
@@ -133,7 +133,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="tpl-table-black-operation">
-                                                                    <a href="?act=edit&id=<%= data[i].ID %>" onclick="showModal()">
+                                                                    <a href="javascript:;" class="doc-prompt-toggle" id='<%= data[i].ID %>'>
                                                                         <i class="am-icon-pencil"></i> 编辑
                                                                     </a>
                                                                     <a href="?act=delete&id=<%= data[i].ID %>" class="tpl-table-black-operation-del" onclick="return confirm('是否删除该条数据？')">
@@ -159,6 +159,26 @@
                 </div>
     </div>
     </div>
+
+    <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+        <div class="am-modal-dialog">
+            <form class="am-form tpl-form-line-form" style="padding: 33px" action="?" method="post">
+                <input type="hidden" name='id' value="" id="hiddeninput">
+                <div class="am-form-group">
+                    <input type="text" class="tpl-form-input" name="title" placeholder="标题">
+                </div>
+                <div class="am-form-group">
+                    <input type="text" class="tpl-form-input" name="description" placeholder="描述">
+                </div>
+                <div class="am-form-group">
+                    <input type="password" class="tpl-form-input" name="href" placeholder="链接">
+                </div>
+                <div class="am-form-group">
+                    <button type="submit" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script src="/js/amazeui.min.js"></script>
     <script src="/js/amazeui.datatables.min.js"></script>
     <script src="/js/dataTables.responsive.min.js"></script>
@@ -170,10 +190,21 @@
     <script src="/js/dataTables.responsive.min.js"></script>
     <script src="/js/app.js"></script>
     <script>
-        showModal(() => {
-            alert(1);
-            return false;
-        })
+        $(function () {
+            $('.doc-prompt-toggle').on('click', function () {
+                let id = $(this).attr('id')
+                $('#hiddeninput').val(id)
+                $('#my-prompt').modal({
+                    relatedTarget: this,
+                    onConfirm: function (e) {
+                        alert('你输入的是：' + e.data || '')
+                    },
+                    onCancel: function (e) {
+                        alert('不想说!');
+                    }
+                });
+            });
+        });
     </script>
 </body>
 
