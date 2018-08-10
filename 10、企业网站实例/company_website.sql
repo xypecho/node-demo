@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2018-07-25 22:49:44
+Date: 2018-08-10 20:58:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,20 +33,37 @@ CREATE TABLE `aboutus_table` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for admin_table
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_table`;
+CREATE TABLE `admin_table` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_table
+-- ----------------------------
+INSERT INTO `admin_table` VALUES ('1', 'admin', 'e10adc3949ba59abbe56e057f20f883e');
+
+-- ----------------------------
 -- Table structure for banner_table
 -- ----------------------------
 DROP TABLE IF EXISTS `banner_table`;
 CREATE TABLE `banner_table` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
   `href` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of banner_table
 -- ----------------------------
+INSERT INTO `banner_table` VALUES ('1', '这是标题', '这是描述', '这是链接');
 
 -- ----------------------------
 -- Table structure for blog_table
