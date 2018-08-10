@@ -15,15 +15,12 @@ module.exports = () => {
             next();
         }
     })
-
-    // 解决 Can't set headers after they are sent.报错
-
-    router.use('/login',require('./login.js')())
-    router.use('/banner', require('./banner.js')())
     router.get('/', (req, res) => {
         res.render('./admin/index.ejs', {});
     })
 
+    router.use('/login',require('./login.js')())
+    router.use('/banner', require('./banner.js')())
 
     return router;
 }
