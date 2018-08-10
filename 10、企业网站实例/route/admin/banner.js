@@ -1,6 +1,5 @@
 const express = require('express');
 const mysql = require('mysql');
-const app = express()
 
 const db = mysql.createPool({ host: 'localhost', post: '3306', user: 'root', password: '123456', database: 'company_website' });
 const router = express.Router();
@@ -14,7 +13,7 @@ module.exports = () => {
                     res.redirect('/admin/banner');
                 }
             })
-        }else{
+        } else {
             db.query('SELECT * FROM banner_table', (err, data) => {
                 if (err) {
                     res.status(500).send('failed to select data from banner_table');
