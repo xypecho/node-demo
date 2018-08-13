@@ -21,6 +21,7 @@ module.exports = () => {
 
     router.use('/login',require('./login.js')())
     router.use('/banner', require('./banner.js')())
+    router.use('/custom',require('./custom.js')())
 
     return router;
 }
