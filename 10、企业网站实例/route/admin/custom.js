@@ -16,6 +16,8 @@ module.exports = () => {
     })
     router.post('/', (req, res) => {
         console.log(req.body)
+        console.log(req.files)
+        
     })
     return router;
 }
