@@ -63,7 +63,7 @@
                                                     <span class="tpl-form-line-small-title">Title</span>
                                                 </label>
                                                 <div class="am-u-sm-9">
-                                                    <input type="text" class="tpl-form-input" name="title" placeholder="请输入标题文字">
+                                                    <input autocomplete="off" type="text" class="tpl-form-input" name="title" placeholder="请输入标题文字">
                                                     <small>请填写标题文字10-20字左右。</small>
                                                 </div>
                                             </div>
@@ -73,7 +73,7 @@
                                                     <span class="tpl-form-line-small-title">description</span>
                                                 </label>
                                                 <div class="am-u-sm-9">
-                                                    <input type="text" class="tpl-form-input" name="description" placeholder="请输入描述文字">
+                                                    <input autocomplete="off" type="text" class="tpl-form-input" name="description" placeholder="请输入描述文字">
                                                     <small>请填写标题文字10-20字左右。</small>
                                                 </div>
                                             </div>
@@ -90,7 +90,7 @@
                                                         </div>
                                                         <button type="button" class="am-btn am-btn-danger am-btn-sm">
                                                             <i class="am-icon-cloud-upload"></i> 添加封面图片</button>
-                                                        <input id="doc-form-file" type="file" multiple="" name="file1">
+                                                        <input autocomplete="off" id="doc-form-file" type="file" multiple="" name="src">
                                                     </div>
 
                                                 </div>
@@ -120,6 +120,7 @@
                                         <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
                                             <thead>
                                                 <tr>
+                                                    <th>ID</th>
                                                     <th>标题</th>
                                                     <th>描述</th>
                                                     <th>图片</th>
@@ -127,45 +128,62 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="gradeX">
-                                                    <tr class="even gradeC">
-                                                        <td>
-                                                            标题1
-                                                        </td>
-                                                        <td>
-                                                            标题12
-                                                        </td>
-                                                        <td>
-                                                            标题123
-                                                        </td>
-                                                        <td>
-                                                            <div class="tpl-table-black-operation">
-                                                                <a href="javascript:;" class="doc-prompt-toggle">
-                                                                    <i class="am-icon-pencil"></i> 编辑
-                                                                </a>
-                                                                <a href="#" class="tpl-table-black-operation-del">
-                                                                    <i class="am-icon-trash"></i> 删除
-                                                                </a>
-                                                            </div>
-                                                        </td>
+                                                <% for(var i=0;i<data.length;i++){ %>
+                                                    <tr class="gradeX">
+                                                        <tr class="even gradeC">
+                                                            <td>
+                                                                <%= data[i].ID %>
+                                                            </td>
+                                                            <td>
+                                                                <%= data[i].title %>
+                                                            </td>
+                                                            <td>
+                                                                <%= data[i].description %>
+                                                            </td>
+                                                            <td>
+                                                                <img src="<%= data[i].src %>" alt="" width="50" height="50">
+                                                            </td>
+                                                            <td>
+                                                                <div class="tpl-table-black-operation">
+                                                                    <a href="javascript:;" class="doc-prompt-toggle"  id='<%= data[i].ID %>'>
+                                                                        <i class="am-icon-pencil"></i> 编辑
+                                                                    </a>
+                                                                    <a href="?act=delete&id=<%= data[i].ID %>" class="tpl-table-black-operation-del" onclick="return confirm('是否删除该条数据？')">
+                                                                        <i class="am-icon-trash"></i> 删除
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                     </tr>
+                                                    <% } %>
                                             </tbody>
                                         </table>
-
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                         </div>
-
-
-
                     </div>
                 </div>
     </div>
+    </div>
+    <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+        <div class="am-modal-dialog">
+            <form class="am-form tpl-form-line-form" style="padding: 33px" action="?" method="post" enctype="multipart/form-data">
+                <input autocomplete="off" type="hidden" name='id' value="" id="hiddeninput">
+                <div class="am-form-group">
+                    <input autocomplete="off" type="text" class="tpl-form-input" name="title" placeholder="标题">
+                </div>
+                <div class="am-form-group">
+                    <input autocomplete="off" type="text" class="tpl-form-input" name="description" placeholder="描述">
+                </div>
+                <div class="am-form-group">
+                    <input autocomplete="off" id="doc-form-file" type="file" multiple="" name="src">
+                </div>
+                <div class="am-form-group">
+                    <button type="submit" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn">提交</button>
+                </div>
+            </form>
+        </div>
     </div>
     <script src="/js/amazeui.min.js"></script>
     <script src="/js/amazeui.datatables.min.js"></script>
@@ -173,5 +191,22 @@
     <script src="/js/app.js"></script>
 
 </body>
+<script>
+    $(function () {
+        $('.doc-prompt-toggle').on('click', function () {
+            let id = $(this).attr('id')
+            $('#hiddeninput').val(id)
+            $('#my-prompt').modal({
+                relatedTarget: this,
+                onConfirm: function (e) {
+                    alert('你输入的是：' + e.data || '')
+                },
+                onCancel: function (e) {
+                    alert('不想说!');
+                }
+            });
+        });
+    });
+</script>
 
 </html>
