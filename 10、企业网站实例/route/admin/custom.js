@@ -1,8 +1,9 @@
 const express = require('express');
 const mysql = require('mysql');
-
 const db = mysql.createPool({ host: 'localhost', post: '3306', user: 'root', password: '123456', database: 'company_website' });
 const router = express.Router();
+const path = require('path');
+const fs = require('fs');
 
 module.exports = () => {
     router.get('/', (req, res) => {
@@ -29,11 +30,14 @@ module.exports = () => {
         // 判断是编辑还是新增，有id则是编辑
         let title = req.body.title;
         let description = req.body.description;
-        let src = req.body.src;
-        console.log(`{'${title}','${description}','${src}'}`)
-        console.log(req.files)
+        let src = req.files[0].destination + '/' + new Date().toLocaleString().replace(' ', '-').replace(/:/g, '-') + path.extname(req.files[0].originalname);
+        fs.rename(req.files[0].path, src, (err, data) => {
+            if (err) {
+                res.status(500).send('failed to upload files').end();
+            }
+        })
         if (req.body.id) {
-            db.query(`UPDATE custom_evaluation_table SET title='${title}',description='${description}',src='${src}' WHERE ID = ${req.body.id}`,(err,data)=>{
+            db.query(`UPDATE custom_evaluation_table SET title='${title}',description='${description}',src='${src}' WHERE ID = ${req.body.id}`, (err, data) => {
                 if (err) {
                     res.status(500).send('failed to update data in custom_evaluation_table')
                 } else {
@@ -41,7 +45,7 @@ module.exports = () => {
                 }
             })
         } else {
-            db.query(`INSERT INTO custom_evaluation_table (title,description,src) VALUES ('${title}','${description}','${src}')`,(err,data)=>{
+            db.query(`INSERT INTO custom_evaluation_table (title,description,src) VALUES ('${title}','${description}','${src}')`, (err, data) => {
                 if (err) {
                     res.status(500).send('failed to insert data in custom_evaluation_table')
                 } else {
