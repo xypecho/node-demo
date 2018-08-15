@@ -30,9 +30,12 @@ module.exports = () => {
         // 判断是编辑还是新增，有id则是编辑
         let title = req.body.title;
         let description = req.body.description;
-        console.log(req.files[0])
-        console.log(path.parse(req.files[0].path).destination)
-        let src = `/${req.files[0].destination}/${req.files[0].originalname}${path.extname(req.files[0].originalname)}`;
+        // let src = `e:/项目代码/node-demo/10、企业网站实例/static/upload/${req.files[0].originalname}${path.extname(req.files[0].originalname)}`;
+        let src = `${req.files[0].path}/${path.extname(req.files[0].originalname)}`;
+        // console.log(req.files)
+        // console.log(req.files[0].path)
+        // console.log(src)
+        // return
         fs.rename(req.files[0].path, src, (err, data) => {
             if (err) {
                 // res.status(500).send('failed to upload files').end();
