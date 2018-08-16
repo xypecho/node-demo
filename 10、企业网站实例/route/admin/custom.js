@@ -2,18 +2,30 @@ const express = require('express');
 const mysql = require('mysql');
 const db = mysql.createPool({ host: 'localhost', post: '3306', user: 'root', password: '123456', database: 'company_website' });
 const router = express.Router();
-const path = require('path');
+const pathlib = require('path');
 const fs = require('fs');
 
 module.exports = () => {
     router.get('/', (req, res) => {
         // 判断是否是删除数据的请求
         if (req.query.act == 'delete') {
-            db.query(`DELETE FROM custom_evaluation_table WHERE ID=${req.query.id}`, (err, data) => {
+            db.query(`SELECT * FROM custom_evaluation_table WHERE ID=${req.query.id}`, (err, data) => {
                 if (err) {
-                    res.status(500).send('failed to delete data from custom_evaluation_table')
+                    res.status(500).send('database error').end();
                 } else {
-                    res.redirect('/admin/custom')
+                    db.query(`DELETE FROM custom_evaluation_table WHERE ID=${req.query.id}`, (ERR, DATA) => {
+                        if (ERR) {
+                            res.status(500).send('failed to delete data from custom_evaluation_table')
+                        } else {
+                            fs.unlink(`./static/upload/${data[0].src}`, (error) => {
+                                if (error) {
+                                    res.status(500).send('failed to delete data')
+                                } else {
+                                    res.redirect('/admin/custom')
+                                }
+                            })
+                        }
+                    })
                 }
             })
         } else {
@@ -30,19 +42,15 @@ module.exports = () => {
         // 判断是编辑还是新增，有id则是编辑
         let title = req.body.title;
         let description = req.body.description;
-        // let src = `e:/项目代码/node-demo/10、企业网站实例/static/upload/${req.files[0].originalname}${path.extname(req.files[0].originalname)}`;
-        let src = `${req.files[0].path}/${path.extname(req.files[0].originalname)}`;
-        // console.log(req.files)
-        // console.log(req.files[0].path)
-        // console.log(src)
-        // return
+        let src = `${req.files[0].path}${pathlib.parse(req.files[0].originalname).ext}`
+        let newFileName = `${req.files[0].filename}${pathlib.parse(req.files[0].originalname).ext}`;
         fs.rename(req.files[0].path, src, (err, data) => {
             if (err) {
                 // res.status(500).send('failed to upload files').end();
                 console.log(err)
             } else {
                 if (req.body.id) {
-                    db.query(`UPDATE custom_evaluation_table SET title='${title}',description='${description}',src='${src}' WHERE ID = ${req.body.id}`, (err, data) => {
+                    db.query(`UPDATE custom_evaluation_table SET title='${title}',description='${description}',src='${newFileName}' WHERE ID = ${req.body.id}`, (err, data) => {
                         if (err) {
                             res.status(500).send('failed to update data in custom_evaluation_table')
                         } else {
@@ -50,7 +58,7 @@ module.exports = () => {
                         }
                     })
                 } else {
-                    db.query(`INSERT INTO custom_evaluation_table (title,description,src) VALUES ('${title}','${description}','${src}')`, (err, data) => {
+                    db.query(`INSERT INTO custom_evaluation_table (title,description,src) VALUES ('${title}','${description}','${newFileName}')`, (err, data) => {
                         if (err) {
                             res.status(500).send('failed to insert data in custom_evaluation_table')
                         } else {
