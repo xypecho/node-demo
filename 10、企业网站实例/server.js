@@ -36,9 +36,9 @@ app.set('views', 'template');
 app.set('view engine', 'html');
 
 //4.route
-app.use('/', require('./route/web.js')());
+app.use('/', require('./route/web/web.js')());
 app.use('/admin/', require('./route/admin/admin.js')());
 
 
 //5.没有获取到数据，设置默认显示的数据 default:static
-app.use(expressStatic('./static/'))
+app.use(expressStatic('./static/web'))

@@ -2,6 +2,7 @@ const express = require('express');
 const tool = require('../../libs/common.js')
 const mysql = require('mysql');
 const app = express()
+const expressStatic = require('express-static');
 const path = require('path')
 
 module.exports = () => {
@@ -23,6 +24,6 @@ module.exports = () => {
     router.use('/login', require('./login.js')())
     router.use('/banner', require('./banner.js')())
     router.use('/custom', require('./custom.js')())
-
+    app.use(expressStatic('./static/admin'))
     return router;
 }
