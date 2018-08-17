@@ -23,6 +23,7 @@
 	<script type="text/javascript" src="js/jquery.cslider.js"></script>
 	<script type="text/javascript">
 		$(function () {
+
 			$('#da-slider').cslider({
 				autoplay: true,
 				bgincrement: 450
@@ -49,11 +50,13 @@
 
 		});
 	</script>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<!-- //Owl Carousel Assets -->
+	<!----font-Awesome----->
+	<link rel="stylesheet" href="fonts/css/font-awesome.min.css">
+	<!----font-Awesome----->
 </head>
 
-<body id="app">
+<body>
 	<div class="header_bg">
 		<div class="container">
 			<div class="row header">
@@ -145,8 +148,38 @@
 		<!-- start slider -->
 		<div class="container">
 			<div id="da-slider" class="da-slider text-center">
-				<div class="da-slide" v-for='banner in banners'>
-					<h2>{{banner.ID}}</h2>
+				<div class="da-slide">
+					<h2>education portal</h2>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+						<span class="hide_text"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+							of type and scrambled it to make a type specimen book.</span>
+					</p>
+					<h3 class="da-link">
+						<a href="single-page.html" class="fa-btn btn-1 btn-1e">view more</a>
+					</h3>
+				</div>
+				<div class="da-slide">
+					<h2>online educations</h2>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+						<span class="hide_text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+							of type and scrambled it to make a type specimen book.</span>
+					</p>
+					<h3 class="da-link">
+						<a href="single-page.html" class="fa-btn btn-1 btn-1e">view more</a>
+					</h3>
+				</div>
+				<div class="da-slide">
+					<h2>education portal</h2>
+					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+						<span class="hide_text"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+							of type and scrambled it to make a type specimen book.</span>
+					</p>
+					<h3 class="da-link">
+						<a href="single-page.html" class="fa-btn btn-1 btn-1e">view more</a>
+					</h3>
+				</div>
+				<div class="da-slide">
+					<h2>online educations</h2>
 					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 						<span class="hide_text"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
 							of type and scrambled it to make a type specimen book.</span>
@@ -182,8 +215,7 @@
 						<a href="#">Lorem Ipsum is</a>
 					</h4>
 					<p class="para">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its
-						layout.
-					</p>
+						layout.</p>
 					<a href="single-page.html" class="fa-btn btn-1 btn-1e">read more</a>
 				</div>
 				<div class="col-md-3 images_1_of_4 bg1 text-center">
@@ -392,19 +424,6 @@
 			<!----//End-img-cursual---->
 		</div>
 	</div>
-
 </body>
-<script>
-	let banners;
-	axios.get('/get_banners').then(function (response) {
-		banners = response.data;
-	});
-	let app = new Vue({
-		el: '#app',
-		data: {
-			banners
-		}
-	})
-</script>
 
 </html>
