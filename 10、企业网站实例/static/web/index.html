@@ -398,6 +398,9 @@
 	let banners;
 	axios.get('/get_banners').then(function (response) {
 		banners = response.data;
+		for (let i = 0; i < banners.length; i++) {
+			console.log(banners[i])
+		}
 	});
 	let app = new Vue({
 		el: '#app',

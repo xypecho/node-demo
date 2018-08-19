@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2018-08-10 20:58:45
+Date: 2018-08-19 12:37:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,12 +58,14 @@ CREATE TABLE `banner_table` (
   `description` varchar(255) NOT NULL,
   `href` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of banner_table
 -- ----------------------------
-INSERT INTO `banner_table` VALUES ('1', '这是标题', '这是描述', '这是链接');
+INSERT INTO `banner_table` VALUES ('16', '2124', 'admin124', '123456124');
+INSERT INTO `banner_table` VALUES ('17', '新增一个看看', 'admin', '123456');
+INSERT INTO `banner_table` VALUES ('18', 'Amaze UI 模式窗口', 'admin', '123456');
 
 -- ----------------------------
 -- Table structure for blog_table
@@ -110,16 +112,18 @@ CREATE TABLE `contact_table` (
 -- ----------------------------
 DROP TABLE IF EXISTS `custom_evaluation_table`;
 CREATE TABLE `custom_evaluation_table` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
   `src` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of custom_evaluation_table
 -- ----------------------------
+INSERT INTO `custom_evaluation_table` VALUES ('1', '1', '2', '2eeef27158fd7c634dc0039383ebc5b1.jpg');
+INSERT INTO `custom_evaluation_table` VALUES ('2', '1', '2', 'bc89d8299ca78bc05829f9ae860304d2.png');
 
 -- ----------------------------
 -- Table structure for intro_table
