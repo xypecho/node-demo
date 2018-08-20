@@ -139,15 +139,15 @@
 	<div class="copyrights">Collect from
 		<a href="http://www.cssmoban.com/" title="��վģ��">��վģ��</a>
 	</div>
-	<div class="slider_bg" id="app">
+	<div class="slider_bg">
 		<!-- start slider -->
 		<div class="container">
-			<div id="da-slider" class="da-slider text-center">
+			<div id="app" class="da-slider text-center">
 				<div class="da-slide" v-for='banner in banners'>
-					<h2>{{banner.title}}</h2>
+					<h2>{{ banner.title }}</h2>
 					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-						<span class="hide_text"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-							of type and scrambled it to make a type specimen book.</span>
+						<span class="hide_text"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+							printer took a galley of type and scrambled it to make a type specimen book.</span>
 					</p>
 					<h3 class="da-link">
 						<a href="single-page.html" class="fa-btn btn-1 btn-1e">view more</a>
@@ -168,8 +168,8 @@
 					<h4>
 						<a href="#">Sed Porta Dolor</a>
 					</h4>
-					<p class="para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-						dummy text 1500s.</p>
+					<p class="para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+						industry's standard dummy text 1500s.</p>
 					<a href="single-page.html" class="fa-btn btn-1 btn-1e">read more</a>
 				</div>
 				<div class="col-md-3 images_1_of_4 bg1 text-center">
@@ -179,8 +179,8 @@
 					<h4>
 						<a href="#">Lorem Ipsum is</a>
 					</h4>
-					<p class="para">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its
-						layout.
+					<p class="para">It is a long established fact that a reader will be distracted by the readable content of a page when
+						looking at its layout.
 					</p>
 					<a href="single-page.html" class="fa-btn btn-1 btn-1e">read more</a>
 				</div>
@@ -191,8 +191,8 @@
 					<h4>
 						<a href="#">Sed Porta Dolor</a>
 					</h4>
-					<p class="para">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 by
-						H. Rackham.</p>
+					<p class="para">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections
+						1.10.32 by H. Rackham.</p>
 					<a href="single-page.html" class="fa-btn btn-1 btn-1e">read more</a>
 				</div>
 				<div class="col-md-3 images_1_of_4 bg1 text-center">
@@ -202,8 +202,8 @@
 					<h4>
 						<a href="#">Contrary belief</a>
 					</h4>
-					<p class="para">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form,
-						by injected humour.</p>
+					<p class="para">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
+						in some form, by injected humour.</p>
 					<a href="single-page.html" class="fa-btn btn-1 btn-1e">read more</a>
 				</div>
 			</div>
@@ -220,11 +220,11 @@
 				<div class="col-md-6 content_right">
 					<h4>Lorem Ipsum is simply
 						<span>dummy text of the ornare </span> vulputate printing and There are many variations of passages.</h4>
-					<p class="para">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form
-						alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-						are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle
-						of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this
-						the first true generator on the Internet. It uses a dictionary of over 200 Latin words. </p>
+					<p class="para">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
+						in some form alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+						If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the
+						middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making
+						this the first true generator on the Internet. It uses a dictionary of over 200 Latin words. </p>
 					<a href="single-page.html" class="fa-btn btn-1 btn-1e">read more</a>
 				</div>
 			</div>
@@ -392,27 +392,21 @@
 	</div>
 </body>
 <script>
-	let app = new Vue({
+	new Vue({
 		el: '#app',
 		data: {
 			banners: [],
-			arr: [{
-				name: 123
-			}, {
-				name: 666
-			}, {
-				name: 999
-			}]
+			mes: 'hello'
 		},
-		mounted() {
+		created() {
 			this.get_banners();
 			console.log(this.banners)
 		},
 		methods: {
-			get_banners: () => {
+			get_banners() {
 				axios.get('/get_banners').then(res => {
 					console.log(res.data)
-					this.banners = res.data;
+					this.banners = res.data[0];
 				})
 			}
 		}
