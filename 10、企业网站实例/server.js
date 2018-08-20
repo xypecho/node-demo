@@ -7,7 +7,7 @@ const cookieSession = require('cookie-session');
 const consolidate = require('consolidate');
 const expressRoute = require('express-route');
 const multer = require('multer');
-const multerobj = multer({ dest: './static/upload' }); // 设置存放图片的位置
+const multerobj = multer({ dest: './static/web/upload' }); // 设置存放图片的位置
 
 const app = express();
 app.listen(8080);

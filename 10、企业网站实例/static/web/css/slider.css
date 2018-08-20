@@ -102,7 +102,6 @@
 	position: relative;
 	width: 24px;
 	height:24px;
-	background: url(../images/slide-pagenat.png) no-repeat -11px 0px;
 	margin: 3px;
 	cursor: pointer;
 }
@@ -113,7 +112,6 @@
 	position: absolute;
 	top: 1px;
 	left: 1px;
-	background: url(../images/slide-pagenat.png) no-repeat -30px -1px;
 	display: inline-block;
 }
 .da-arrows{

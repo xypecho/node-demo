@@ -8,10 +8,6 @@
 	<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-	<!--[if lt IE 9]>
-     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
 	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 	<!-- start plugins -->
 	<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -23,10 +19,12 @@
 	<script type="text/javascript" src="js/jquery.cslider.js"></script>
 	<script type="text/javascript">
 		$(function () {
+
 			$('#da-slider').cslider({
 				autoplay: true,
 				bgincrement: 450
 			});
+
 		});
 	</script>
 	<!-- Owl Carousel Assets -->
@@ -49,11 +47,11 @@
 
 		});
 	</script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 
-<body id="app">
+<body>
 	<div class="header_bg">
 		<div class="container">
 			<div class="row header">
@@ -141,12 +139,12 @@
 	<div class="copyrights">Collect from
 		<a href="http://www.cssmoban.com/" title="��վģ��">��վģ��</a>
 	</div>
-	<div class="slider_bg">
+	<div class="slider_bg" id="app">
 		<!-- start slider -->
 		<div class="container">
 			<div id="da-slider" class="da-slider text-center">
 				<div class="da-slide" v-for='banner in banners'>
-					<h2>{{banner.ID}}</h2>
+					<h2>{{banner.title}}</h2>
 					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 						<span class="hide_text"> Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
 							of type and scrambled it to make a type specimen book.</span>
@@ -392,20 +390,31 @@
 			<!----//End-img-cursual---->
 		</div>
 	</div>
-
 </body>
 <script>
-	let banners;
-	axios.get('/get_banners').then(function (response) {
-		banners = response.data;
-		for (let i = 0; i < banners.length; i++) {
-			console.log(banners[i])
-		}
-	});
 	let app = new Vue({
 		el: '#app',
 		data: {
-			banners
+			banners: [],
+			arr: [{
+				name: 123
+			}, {
+				name: 666
+			}, {
+				name: 999
+			}]
+		},
+		mounted() {
+			this.get_banners();
+			console.log(this.banners)
+		},
+		methods: {
+			get_banners: () => {
+				axios.get('/get_banners').then(res => {
+					console.log(res.data)
+					this.banners = res.data;
+				})
+			}
 		}
 	})
 </script>
