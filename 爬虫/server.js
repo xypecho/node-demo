@@ -22,7 +22,7 @@ for (let i = 3; i < 50; i++) {
                     }
                     http.get(src, function (response) {
                         let images = '';
-                        response.setEncoding("binary"); // 设置编码，不然打不开下载的图片
+                        response.setEncoding("binary"); // 设置编码，不然打不开下载的图片  
                         response.on('data', function (image) {
                             images += image;
                         })
