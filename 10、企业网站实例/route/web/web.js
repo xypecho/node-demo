@@ -23,7 +23,7 @@ module.exports = () => {
 			if (err) {
 				res.status(500).send('failed to get data').end();
 			} else {
-				res.status(200).send([data]).end();
+				res.status(200).send(data).end();
 			}
 		})
 	})
