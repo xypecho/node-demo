@@ -4,67 +4,20 @@ const puppeteer = require('puppeteer');
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  // 进入页面
-  await page.goto('https://music.163.com');
-
-  // 点击搜索框拟人输入 鬼才会想起
-  const musicName = '借我';
-  await page.type('.j-flag', musicName, { delay: 0 });
-
-  // 回车
-  await page.keyboard.press('Enter');
-
-  // 获取歌曲列表的 iframe
-  await page.waitFor(2000);
-  let iframe = await page.frames().find(f => f.name() === 'contentFrame');
-  const SONG_LS_SELECTOR = await iframe.$('.srchsongst');
-
-  // 获取歌曲 鬼才会想起 的地址
-  const selectedSongHref = await iframe.evaluate(e => {
-    const songList = Array.from(e.childNodes);
-    const idx = songList.findIndex(v => v.childNodes[1].innerText.replace(/\s/g, '') === '借我');
-    return songList[idx].childNodes[1].firstChild.firstChild.firstChild.href;
-  }, SONG_LS_SELECTOR);
-
-  // 进入歌曲页面
-  await page.goto(selectedSongHref);
-
-  // 获取歌曲页面嵌套的 iframe
-  await page.waitFor(2000);
-  iframe = await page.frames().find(f => f.name() === 'contentFrame');
-
-  // 点击 展开按钮
-  const unfoldButton = await iframe.$('#flag_ctrl');
-  await unfoldButton.click();
-
-  // 获取歌词
-  const LYRIC_SELECTOR = await iframe.$('#lyric-content');
-  const lyricCtn = await iframe.evaluate(e => {
-    return e.innerText;
-  }, LYRIC_SELECTOR);
-
-  console.log(lyricCtn);
-
-  // 截图
-  await page.screenshot({
-    path: '歌曲.png',
-    fullPage: true,
+  await page.goto('http://jandan.net/top-ooxx');
+  let imgObj = await page.$$eval('.view_img_link', a => {
+    let arr = [];
+    a.map(v => {
+      arr.push(v.href);
+    })
+    return arr;
   });
-
-  // 写入文件
-  let writerStream = fs.createWriteStream('歌词.txt');
-  writerStream.write(lyricCtn, 'UTF8');
-  writerStream.end();
-
-  // 获取评论数量
-  const commentCount = await iframe.$eval('.sub.s-fc3', e => e.innerText);
-  console.log(commentCount);
-
-  // 获取评论
-  const commentList = await iframe.$$eval('.itm', elements => elements.outerHTML);
-  console.log(commentList);
-  // let lyric = fs.createWriteStream('评论.txt');
-  // lyric.write(lyric, 'UTF8')
-  // lyric.end();
+  // console.log(imgObj)
+  for (let i = 0; i < imgObj.length; i++) {
+    // page = await browser.newPage()
+    await page.goto(imgObj[i]); //防止页面太长，加载超时
+    await page.screenshot({ path: `./img/img${i}.jpg` });
+    console.log(`================正在下载第${i}张图片，还剩${imgObj.length - i}张待下载================`)
+  }
   browser.close()
 })();
